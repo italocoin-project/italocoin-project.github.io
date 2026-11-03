@@ -17,9 +17,12 @@ tbody tr:hover{background:rgba(121,224,195,.07)}
 .site-footer a{color:var(--accent)}
 button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
 @media(max-width:600px){.controls{display:grid;grid-template-columns:1fr 1fr}.controls input[type=search]{grid-column:1/-1;min-width:0}.controls button{width:100%}.pages{align-items:flex-start}.page-buttons{width:100%}.page-buttons button{flex:1}.site-footer{display:grid;gap:9px}}
+.adsense-slot{width:100%;max-width:1100px;min-height:90px;margin:22px auto 26px;text-align:center;overflow:hidden;clear:both}.adsense-slot ins{display:block;min-height:90px}
 </style>
+<meta name="google-adsense-account" content="ca-pub-7976130141061747">
 </head><body><main>
 <nav class="nav"><a class="brand" href="./">← Finance Pattern Engine</a><a href="./#market">Monitor exchange</a></nav>
+<div class="adsense-slot" aria-label="Spazio pubblicitario"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-7976130141061747" data-ad-slot="6742701340" data-ad-format="auto" data-full-width-responsive="true"></ins></div>
 <section class="panel">
 <h1>Classifica globale delle criptovalute</h1>
 <p>Ranking CoinMarketCap ordinato per capitalizzazione. Consulta fino a 300 asset, cerca per nome o ticker e apri la scheda completa di ogni moneta.</p>
@@ -41,4 +44,34 @@ function normalize(c){const q=(c.quote||{}).USD||((Array.isArray(c.quote)?c.quot
 function render(){const q=$('search').value.trim().toLowerCase(),key=$('sort').value;let list=coins.filter(c=>!q||(c.name+' '+c.symbol).toLowerCase().includes(q));list.sort((a,b)=>key==='name'?a.name.localeCompare(b.name):key==='rank'?(a.market_cap_rank||Infinity)-(b.market_cap_rank||Infinity):(Number(b[key])||0)-(Number(a[key])||0));const pages=Math.max(1,Math.ceil(list.length/perPage));page=Math.min(page,pages);const start=(page-1)*perPage,visible=list.slice(start,start+perPage);$('rows').innerHTML=visible.length?visible.map(c=>'<tr><td>'+(c.market_cap_rank||'—')+'</td><td><a class="asset" href="coin.html?id='+encodeURIComponent(c.symbol)+'">'+(c.image?'<img loading="lazy" src="'+String(c.image).replace(/"/g,'&quot;')+'" alt="">':'')+'<span><span class="coin-name">'+escapeHtml(c.name)+'</span><span class="coin-symbol">'+escapeHtml(String(c.symbol||'').toUpperCase())+'</span></span></a></td><td>'+fmt(c.current_price)+'</td><td class="'+(c.price_change_percentage_24h>=0?'up':'down')+'">'+pct(c.price_change_percentage_24h)+'</td><td class="'+((c.price_change_percentage_7d_in_currency||0)>=0?'up':'down')+'">'+pct(c.price_change_percentage_7d_in_currency)+'</td><td>'+fmt(c.market_cap,true)+'</td><td>'+fmt(c.total_volume,true)+'</td><td>'+qty(c.circulating_supply)+'</td></tr>').join(''):'<tr><td colspan="8" style="text-align:center;padding:24px">Nessun risultato. Modifica la ricerca o aggiorna i dati.</td></tr>';$('pageInfo').textContent=list.length?'Pagina '+page+' di '+pages+' · risultati '+(start+1)+'–'+Math.min(start+perPage,list.length)+' su '+list.length:'0 risultati';$('prev').disabled=busy||page===1;$('next').disabled=busy||page>=pages}
 async function load(){if(busy)return;busy=true;$('status').textContent='Caricamento pagina '+page+' dalla cache CoinMarketCap…';$('refresh').disabled=true;$('prev').disabled=true;$('next').disabled=true;try{const res=await fetch('data/market/cmc-market.json',{cache:'no-store'});if(!res.ok)throw Error('Cache HTTP '+res.status);const json=await res.json();if(!Array.isArray(json.coins))throw Error('Cache non valida');coins=json.coins.map(c=>({id:c.id,name:c.name,symbol:c.symbol,market_cap_rank:c.rank,current_price:c.price,price_change_percentage_24h:c.change_24h,price_change_percentage_7d_in_currency:c.change_7d,market_cap:c.market_cap,total_volume:c.volume_24h,circulating_supply:c.circulating_supply}));render();$('status').textContent='Dati CoinMarketCap aggiornati '+new Date(json.updated_at).toLocaleString('it-IT')+' · '+coins.length+' asset in cache';}catch(e){$('status').textContent='La cache CoinMarketCap non è ancora disponibile. Riprova tra qualche minuto mentre il processo automatico prepara i dati.';if(!coins.length)$('rows').innerHTML='<tr><td colspan="8" style="text-align:center;padding:24px">Dati in fase di inizializzazione.</td></tr>';}finally{busy=false;$('refresh').disabled=false;render()}}
 $('search').addEventListener('input',()=>{page=1;render()});$('sort').addEventListener('change',()=>{page=1;render()});$('refresh').addEventListener('click',load);$('prev').addEventListener('click',()=>{if(page>1){page--;render()}});$('next').addEventListener('click',()=>{page++;render()});load();
-</script></body></html>
+</script><script>
+/* AdSense is deliberately held off until the Google-certified TCF CMP is published in AdSense > Privacy & messaging. */
+(function(){
+  const FPE_ADS_ENABLED = false;
+  if (!FPE_ADS_ENABLED) return;
+  if (window.__fpeAdsLoaderStarted) return;
+  window.__fpeAdsLoaderStarted = true;
+  const loadAds = function(){
+    if (window.__fpeAdsLoaded) return;
+    window.__fpeAdsLoaded = true;
+    const s=document.createElement('script');
+    s.async=true;
+    s.crossOrigin='anonymous';
+    s.src='https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7976130141061747';
+    s.onload=function(){
+      document.querySelectorAll('ins.adsbygoogle:not([data-fpe-pushed])').forEach(function(ad){
+        ad.setAttribute('data-fpe-pushed','1');
+        (window.adsbygoogle=window.adsbygoogle||[]).push({});
+      });
+    };
+    document.head.appendChild(s);
+  };
+  if (typeof window.__tcfapi === 'function') {
+    window.__tcfapi('addEventListener',2,function(tcData,success){
+      if (!success || !tcData) return;
+      if (tcData.eventStatus==='tcloaded' || tcData.eventStatus==='useractioncomplete') loadAds();
+    });
+  }
+})();
+</script>
+</body></html>
