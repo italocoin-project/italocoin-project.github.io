@@ -82,10 +82,14 @@ button:focus-visible,a:focus-visible,select:focus-visible,input:focus-visible{ou
 .overview-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:18px 0}.overview-stats>div{border:1px solid rgba(151,177,220,.14);background:rgba(255,255,255,.025);border-radius:12px;padding:13px 15px;min-width:0}.overview-stats span{display:block;color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.08em}.overview-stats strong{display:block;margin-top:5px;font-size:clamp(16px,2vw,22px);font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
 .market-table-wrap{max-height:570px}.market-table{font-size:13px;white-space:nowrap}.market-table thead th{position:sticky;top:0;z-index:1;background:#111c30}.market-table tbody tr{cursor:pointer}.market-table tbody tr:hover{background:rgba(121,224,195,.07)}.market-table td{font-variant-numeric:tabular-nums}.market-table .coin-name{display:flex;align-items:center;gap:10px;min-width:150px}.coin-symbol{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,#203751,#15263a);color:var(--accent);font-size:10px;font-weight:850}.coin-title{font-weight:750;color:var(--text)}.coin-subtitle{display:block;color:var(--muted);font-size:11px}.coin-star{background:none;border:0;color:#70809b;font-size:19px;cursor:pointer;padding:3px 6px}.coin-star.is-favorite{color:#ffd166}.change-up{color:#71f0cb;font-weight:750}.change-down{color:#ff9ca8;font-weight:750}.market-table .coin-price{font-weight:750}.coin-detail-link{color:inherit;text-decoration:none}.coin-detail-link:hover .coin-title{color:var(--accent)}
 @media(max-width:650px){.market-overview{padding:13px}.overview-controls{width:100%}.overview-controls input[type=search]{flex:1;min-width:130px}.overview-stats{grid-template-columns:1fr}.overview-stats>div{padding:10px 12px}.market-table{font-size:12px}}
+
+/* Analytics consent banner */
+.analytics-consent{position:fixed;z-index:1000;left:16px;right:16px;bottom:16px;max-width:760px;margin:auto;padding:18px 20px;border:1px solid rgba(121,224,195,.35);border-radius:16px;background:rgba(10,17,31,.97);box-shadow:0 18px 60px rgba(0,0,0,.5);backdrop-filter:blur(14px)}
+.analytics-consent p{margin:0 0 12px;font-size:13px;line-height:1.6}.analytics-consent a{color:var(--accent)}.analytics-consent-actions{display:flex;gap:10px;flex-wrap:wrap}.analytics-consent-actions button,.analytics-settings{border:1px solid var(--line);border-radius:9px;padding:9px 13px;font:inherit;font-size:13px;font-weight:700;cursor:pointer;background:#1a2740;color:var(--text)}.analytics-consent-actions .accept{background:var(--accent);color:#061a18;border-color:var(--accent)}.analytics-settings{margin-top:8px;padding:6px 9px;font-size:12px}
 </style>
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7976130141061747" crossorigin="anonymous"></script>
   <meta name="google-adsense-account" content="ca-pub-7976130141061747">
-</head><body><main>
+</head><body><div id="analyticsConsent" class="analytics-consent" role="dialog" aria-label="Preferenze di analisi" aria-live="polite" hidden><p><strong>Preferenze privacy</strong><br>Usiamo Google Analytics 4 per capire in forma aggregata come viene utilizzato il sito. Analytics si attiva solo se scegli “Accetta”. Puoi rifiutare o cambiare idea in seguito. <a href="privacy.html">Leggi l'informativa</a>.</p><div class="analytics-consent-actions"><button class="accept" id="acceptAnalytics" type="button">Accetta analytics</button><button id="rejectAnalytics" type="button">Rifiuta</button></div></div><main>
 <header class="top"><div><div class="eyebrow">Analisi locale · Versione pubblica</div><h1>Finance Pattern Engine</h1><p>Monitoraggio dei prezzi pubblici degli exchange. Le analisi dei movimenti personali restano vuote finché non importi dati reali.</p></div><span class="pill">Prezzi pubblici reali · movimenti non importati</span></header>
 <nav class="site-nav" aria-label="Navigazione principale"><a href="#market">Mercati live</a><a href="#savedMarketHistory">Storico dati</a><a href="#periodCompare">Analisi</a><a href="#educational">Guide crypto</a><a href="#dataNotes">Fonti e limiti</a></nav>
 <div class="adsense-slot" style="max-width:100%;margin:18px auto 24px;text-align:center;overflow:hidden">
@@ -476,4 +480,23 @@ loadMarkets();
 loadSavedMarketHistory();
 setInterval(()=>{if(!document.hidden){loadMarkets();loadMarketOverview()}},60000);
 
+</script><script>
+(function(){
+ const ID='G-0EHW1ZRDRP', KEY='fpe_analytics_consent';
+ const panel=document.getElementById('analyticsConsent');
+ function startAnalytics(){
+  if(window.__fpeAnalyticsStarted)return;window.__fpeAnalyticsStarted=true;
+  window.dataLayer=window.dataLayer||[];window.gtag=function(){dataLayer.push(arguments)};
+  gtag('consent','default',{analytics_storage:'denied',ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied'});
+  gtag('consent','update',{analytics_storage:'granted'});
+  gtag('js',new Date());gtag('config',ID,{anonymize_ip:true});
+  const tag=document.createElement('script');tag.async=true;tag.src='https://www.googletagmanager.com/gtag/js?id='+ID;document.head.appendChild(tag);
+ }
+ function choose(value){try{localStorage.setItem(KEY,value)}catch(e){}panel.hidden=true;if(value==='accepted')startAnalytics()}
+ document.getElementById('acceptAnalytics').addEventListener('click',()=>choose('accepted'));
+ document.getElementById('rejectAnalytics').addEventListener('click',()=>choose('rejected'));
+ const saved=(()=>{try{return localStorage.getItem(KEY)}catch(e){return null}})();
+ if(saved==='accepted')startAnalytics();else if(saved!=='rejected')panel.hidden=false;
+ window.manageAnalyticsPreferences=function(){try{localStorage.removeItem(KEY)}catch(e){}panel.hidden=false;panel.scrollIntoView({behavior:'smooth',block:'end'});};
+})();
 </script></body></html>
