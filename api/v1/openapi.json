@@ -1,0 +1,187 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Finance Pattern Engine Market Data API",
+    "version": "1.0.0",
+    "description": "Static, read-only public crypto market data feed. Source data subject to provider terms and availability."
+  },
+  "servers": [
+    {
+      "url": "https://italocoin-project.github.io"
+    }
+  ],
+  "paths": {
+    "/api/v1/coins.json": {
+      "get": {
+        "summary": "Get latest cryptocurrency market snapshot",
+        "operationId": "getLatestCoins",
+        "responses": {
+          "200": {
+            "description": "Market snapshot",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MarketSnapshot"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Static hosting or data source unavailable"
+          }
+        }
+      }
+    },
+    "/data/market/{date}.jsonl": {
+      "get": {
+        "summary": "Get daily Coinbase spot price archive",
+        "operationId": "getDailyArchive",
+        "parameters": [
+          {
+            "name": "date",
+            "in": "path",
+            "required": true,
+            "description": "UTC date in YYYY-MM-DD format",
+            "schema": {
+              "type": "string",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Newline-delimited JSON snapshots",
+            "content": {
+              "application/x-ndjson": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Archive not found"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "MarketSnapshot": {
+        "type": "object",
+        "required": [
+          "updated_at",
+          "source",
+          "count",
+          "coins"
+        ],
+        "properties": {
+          "updated_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "source": {
+            "type": "string"
+          },
+          "count": {
+            "type": "integer"
+          },
+          "bitcoin_dominance": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "coins": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Coin"
+            }
+          }
+        }
+      },
+      "Coin": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "cmc_id": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          },
+          "symbol": {
+            "type": "string"
+          },
+          "rank": {
+            "type": "integer"
+          },
+          "price": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "change_24h": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "change_7d": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "change_30d": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "market_cap": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "volume_24h": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "circulating_supply": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "total_supply": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "max_supply": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "last_updated": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          }
+        }
+      }
+    }
+  }
+}
