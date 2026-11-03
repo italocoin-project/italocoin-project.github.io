@@ -58,8 +58,9 @@ document = {
     "count": len(coins),
     "coins": coins,
 }
-destination.write_text(
-    json.dumps(document, ensure_ascii=False, separators=(",", ":")) + "\n",
-    encoding="utf-8",
-)
-print(f"Updated {destination} with {len(coins)} assets")
+serialized = json.dumps(document, ensure_ascii=False, separators=(",", ":")) + "\n"
+destination.write_text(serialized, encoding="utf-8")
+api_destination = Path("api/v1/coins.json")
+api_destination.parent.mkdir(parents=True, exist_ok=True)
+api_destination.write_text(serialized, encoding="utf-8")
+print(f"Updated {destination} and {api_destination} with {len(coins)} assets")
