@@ -1,41 +1,67 @@
 name: Update CoinMarketCap static cache
-
 on:
-  push:
-    paths:
-      - ".github/workflows/update-cmc-cache.yml"
-      - "scripts/update_cmc_cache.py"
   schedule:
     - cron: "7,37 * * * *"
   workflow_dispatch:
-
 permissions:
   contents: write
-
 concurrency:
   group: cmc-static-cache
   cancel-in-progress: false
-
 jobs:
   update:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v5
-      - name: Fetch CoinMarketCap market rankings
+      - uses: actions/checkout@v4
+      - name: Fetch latest 300 CoinMarketCap assets
         env:
           CMC_API_KEY: ${{ secrets.CMC_API_KEY }}
-        run: python3 scripts/update_cmc_cache.py
-      - name: Commit cache
+        run: |
+          python3 - <<'PY'
+          import json, os, urllib.request
+          from datetime import datetime, timezone
+          from pathlib import Path
+          key = os.environ.get("CMC_API_KEY", "").strip()
+          if not key:
+              raise SystemExit("Missing CMC_API_KEY repository secret")
+          url = "https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest?start=1&limit=300&convert=USD"
+          req = urllib.request.Request(url, headers={"X-CMC_PRO_API_KEY": key, "Accept": "application/json"})
+          with urllib.request.urlopen(req, timeout=30) as response:
+              payload = json.loads(response.read().decode("utf-8"))
+          status = payload.get("status") or {}
+          if status.get("error_code", 0) != 0:
+              raise SystemExit("CoinMarketCap API error: " + str(status.get("error_message", "unknown")))
+          coins = []
+          for item in payload.get("data", []):
+              quote = ((item.get("quote") or {}).get("USD") or {})
+              coins.append({
+                  "id": item.get("slug"), "cmc_id": item.get("id"),
+                  "name": item.get("name"), "symbol": item.get("symbol"),
+                  "rank": item.get("cmc_rank"), "price": quote.get("price"),
+                  "change_24h": quote.get("percent_change_24h"),
+                  "change_7d": quote.get("percent_change_7d"),
+                  "change_30d": quote.get("percent_change_30d"),
+                  "market_cap": quote.get("market_cap"), "volume_24h": quote.get("volume_24h"),
+                  "circulating_supply": item.get("circulating_supply"),
+                  "total_supply": item.get("total_supply"), "max_supply": item.get("max_supply"),
+                  "last_updated": quote.get("last_updated") or item.get("last_updated")
+              })
+          if len(coins) < 250:
+              raise SystemExit("Incomplete CMC response: " + str(len(coins)) + " assets")
+          out = Path("data/market/cmc-market.json")
+          out.parent.mkdir(parents=True, exist_ok=True)
+          out.write_text(json.dumps({
+              "updated_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+              "source": "CoinMarketCap API", "count": len(coins), "coins": coins
+          }, ensure_ascii=False, separators=(",", ":")) + "\\n", encoding="utf-8")
+          print("Updated", out, "with", len(coins), "assets")
+          PY
+      - name: Commit updated cache
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add data/market/cmc-market.json
-          if git diff --cached --quiet; then
-            echo "No cache changes"
-            exit 0
-          fi
-          git commit -m "Refresh CoinMarketCap static market cache"
-          git pull --rebase origin main
+          if git diff --cached --quiet; then echo "Cache unchanged"; exit 0; fi
+          git commit -m "Refresh CoinMarketCap market cache"
           git push
