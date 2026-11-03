@@ -6,6 +6,7 @@ Backend MVP per API key, quote giornaliere, statistiche aggregate e livelli Free
 
 - `GET /health`: health check.
 - `GET /v1/coins`: feed protetto da header `x-api-key`.
+- `GET /v1/usage`: statistiche degli ultimi 30 giorni per la chiave autenticata.
 - `POST /admin/keys`: crea una chiave (la chiave completa viene mostrata una sola volta).
 - `GET /admin/keys`: elenco chiavi senza segreti.
 - `POST /admin/keys/{id}/revoke`: revoca una chiave.
@@ -49,6 +50,7 @@ Per assegnare Premium, usa `"plan":"premium"`. La chiave completa appare solo ne
 curl "https://YOUR-WORKER.workers.dev/admin/stats" -H "Authorization: Bearer YOUR_ADMIN_TOKEN"
 curl "https://YOUR-WORKER.workers.dev/admin/keys" -H "Authorization: Bearer YOUR_ADMIN_TOKEN"
 curl -X POST "https://YOUR-WORKER.workers.dev/admin/keys/KEY_ID/revoke" -H "Authorization: Bearer YOUR_ADMIN_TOKEN"
+curl "https://YOUR-WORKER.workers.dev/v1/usage" -H "x-api-key: fpe_live_YOUR_KEY"
 ```
 
 ## Stato e limiti attuali
