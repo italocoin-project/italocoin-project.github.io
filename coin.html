@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Dettagli criptovaluta | Finance Pattern Engine</title>
+<meta name="description" content="Scheda dettagliata di una criptovaluta con prezzo, capitalizzazione, supply circolante e storico prezzi.">
+<meta name="theme-color" content="#070b16">
+<style>
+:root{color-scheme:dark;--bg:#070b16;--panel:#10182a;--line:#293650;--text:#f2f6ff;--muted:#9eacc5;--accent:#79e0c3;--blue:#8caeff;--bad:#ff9ca8}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 8% 0%,rgba(69,110,190,.22),transparent 35%),var(--bg);color:var(--text);font:15px/1.6 system-ui,-apple-system,"Segoe UI",sans-serif}main{max-width:1180px;margin:auto;padding:26px 18px 70px}a{color:var(--accent);text-decoration:none}.nav{display:flex;gap:14px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-bottom:24px}.brand{font-weight:800;color:var(--text)}.button{display:inline-block;padding:9px 13px;border:1px solid var(--line);border-radius:10px;background:#17243a;color:var(--text)}.hero,.panel{border:1px solid rgba(145,168,210,.17);border-radius:22px;background:linear-gradient(145deg,rgba(19,29,49,.97),rgba(12,19,34,.97));padding:clamp(18px,3vw,30px);margin-bottom:16px}.hero-head{display:flex;align-items:center;gap:16px;flex-wrap:wrap}.coin-icon{width:58px;height:58px;border-radius:50%;background:#1c2b43;object-fit:contain}.symbol{color:var(--muted);font-weight:700}.price{font-size:clamp(34px,6vw,54px);font-weight:850;letter-spacing:-.05em;margin:18px 0 2px}.change{font-weight:800}.up{color:var(--accent)}.down{color:var(--bad)}.muted{color:var(--muted)}.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}.metric{padding:17px;border:1px solid rgba(145,168,210,.15);border-radius:15px;background:rgba(255,255,255,.025);min-width:0}.metric span{display:block;font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}.metric strong{display:block;margin-top:7px;font-size:clamp(17px,2vw,24px);overflow-wrap:anywhere;font-variant-numeric:tabular-nums}.chart{width:100%;height:auto;min-height:240px}.status{font-size:12px;color:var(--muted);margin-top:12px}.description{max-width:900px;color:#d4deef}h1{font-size:clamp(26px,4vw,40px);letter-spacing:-.04em;margin:0}h2{font-size:20px;margin:0 0 12px}.links{display:flex;gap:10px;flex-wrap:wrap}.links a{border:1px solid var(--line);border-radius:9px;padding:8px 10px}.range-button{border:1px solid var(--line);border-radius:9px;padding:8px 12px;background:#10182a;color:var(--text);cursor:pointer}.range-button.active{background:var(--accent);color:#07151a;border-color:var(--accent);font-weight:800}@media(max-width:760px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}main{padding:15px 11px 45px}.hero,.panel{border-radius:17px;padding:17px}}@media(max-width:400px){.grid{grid-template-columns:1fr}}@media(max-width:600px){
+ main{padding:10px 8px 32px}
+ .nav{gap:8px;margin-bottom:14px}
+ .brand{font-size:13px}
+ .button{padding:8px 9px;font-size:12px}
+ .hero,.panel{padding:13px;border-radius:14px;margin-bottom:11px}
+ .hero-head{gap:10px}
+ .coin-icon{width:42px;height:42px}
+ h1{font-size:clamp(23px,7vw,31px);overflow-wrap:anywhere}
+ h2{font-size:17px}
+ .price{font-size:clamp(30px,10vw,42px);margin-top:12px;overflow-wrap:anywhere}
+ .grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+ .metric{padding:11px 10px;border-radius:12px}
+ .metric span{font-size:9px;letter-spacing:.04em}
+ .metric strong{font-size:clamp(14px,4vw,18px)}
+ .chart{min-height:0;display:block;width:100%;touch-action:pan-y}
+ #chartRanges{width:100%;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}
+ .range-button{min-height:42px;padding:9px 6px;font-size:13px}
+ .status{overflow-wrap:anywhere;font-size:11px}
+ .links a{padding:7px 8px;font-size:12px}
+}
+@media(max-width:360px){
+ .grid{grid-template-columns:1fr}
+ .nav{align-items:flex-start}
+ #chartRanges{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+</style>
+
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7976130141061747" crossorigin="anonymous"></script>
+  <meta name="google-adsense-account" content="ca-pub-7976130141061747">
+</head>
+<body><main>
+<nav class="nav"><a class="brand" href="./">← Finance Pattern Engine</a><a class="button" href="markets.html">Classifica globale</a></nav>
+<div class="adsense-slot" style="max-width:100%;margin:18px auto 24px;text-align:center;overflow:hidden">
+  <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-7976130141061747" data-ad-slot="6742701340" data-ad-format="auto" data-full-width-responsive="true"></ins>
+</div>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+
+<section class="hero">
+ <div class="hero-head"><img id="coinImage" class="coin-icon" alt="" hidden><div><div class="muted">SCHEDA CRIPTOVALUTA</div><h1 id="coinName">Caricamento dati…</h1><div id="coinSymbol" class="symbol">—</div></div></div>
+ <div id="coinPrice" class="price">—</div><div id="coinChange" class="change">—</div><p id="coinStatus" class="status" role="status" aria-live="polite">Caricamento da CoinGecko…</p>
+</section>
+<section class="grid" style="margin-bottom:16px">
+ <div class="metric"><span>Capitalizzazione</span><strong id="marketCap">—</strong></div>
+ <div class="metric"><span>Supply circolante</span><strong id="circulating">—</strong></div>
+ <div class="metric"><span>Supply totale</span><strong id="totalSupply">—</strong></div>
+ <div class="metric"><span>Supply massima</span><strong id="maxSupply">—</strong></div>
+ <div class="metric"><span>Volume 24h</span><strong id="volume">—</strong></div>
+ <div class="metric"><span>Variazione 7 giorni</span><strong id="high">—</strong></div>
+ <div class="metric"><span>Variazione 30 giorni</span><strong id="low">—</strong></div>
+ <div class="metric"><span>Rank per capitalizzazione</span><strong id="rank">—</strong></div>
+</section>
+<section class="panel"><div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap"><h2 style="margin:0">Andamento del prezzo</h2><div id="chartRanges" class="links" aria-label="Intervallo grafico"><button class="range-button active" data-days="6h">Ultima ora</button><button class="range-button" data-days="1">1G</button><button class="range-button" data-days="7">7G</button><button class="range-button" data-days="30">1M</button><button class="range-button" data-days="365">1A</button><button class="range-button" data-days="max">MAX</button></div></div><svg id="priceChart" class="chart" viewBox="0 0 900 260" role="img" aria-label="Grafico del prezzo del periodo selezionato"><text x="450" y="130" fill="#9eacc5" text-anchor="middle">Caricamento grafico…</text></svg><p id="chartStatus" class="status">Grafico basato sui dati storici pubblici; può essere limitato dai servizi esterni.</p></section>
+<section class="panel"><h2>Informazioni sul progetto</h2><p id="description" class="description">Descrizione non disponibile.</p><div class="links" id="coinLinks"></div><p class="status">Metriche e storico a 7 giorni: CoinMarketCap API. Per gli intervalli diversi da 7 giorni il grafico può usare CoinGecko o Binance come fonte alternativa. Le informazioni possono essere incomplete o ritardate. Capitalizzazione = prezzo × supply circolante secondo la fonte; supply e descrizioni possono cambiare. Pagina informativa, non consulenza finanziaria.</p></section>
+<script>
+const $=id=>document.getElementById(id);
+let currentCoinId='',currentDays='6h';
+function money(n){if(!Number.isFinite(n))return '—';return new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',maximumFractionDigits:n<1?8:2,notation:Math.abs(n)>=1e9?'compact':'standard'}).format(n)}
+function supply(n){return Number.isFinite(n)?new Intl.NumberFormat('en-US',{notation:'compact',maximumFractionDigits:3}).format(n):'—'}
+function safeText(v){return String(v||'').replace(/<[^>]*>/g,' ').replace(/\s+/g,' ').trim()}
+function link(url,label){if(!url)return '';try{const u=new URL(url);if(!['https:','http:'].includes(u.protocol))return '';return '<a rel="noopener noreferrer" target="_blank" href="'+u.href.replace(/"/g,'&quot;')+'">'+label+'</a>'}catch(e){return ''}}
+function drawChart(points){
+ const el=$('priceChart');
+ const valid=Array.isArray(points)?points.filter(p=>Array.isArray(p)&&Number.isFinite(Number(p[0]))&&Number.isFinite(Number(p[1]))):[];
+ if(valid.length<2){el.innerHTML='<text x="450" y="130" fill="#9eacc5" text-anchor="middle">Storico non disponibile in questo momento</text>';return}
+ const values=valid.map(p=>Number(p[1])),lo=Math.min(...values),hi=Math.max(...values),span=hi-lo||Math.max(Math.abs(hi)*.001,1e-9),left=58,right=865,top=38,bottom=218;
+ const pts=valid.map((p,i)=>({x:left+i*(right-left)/(valid.length-1),y:bottom-(Number(p[1])-lo)/span*(bottom-top),time:Number(p[0]),price:Number(p[1])}));
+ const path=pts.map((p,i)=>(i?'L':'M')+p.x.toFixed(2)+' '+p.y.toFixed(2)).join(' '),area=path+' L '+right+' '+bottom+' L '+left+' '+bottom+' Z';
+ const grid=[0,.25,.5,.75,1].map(t=>{const y=bottom-t*(bottom-top),v=lo+t*(hi-lo);return '<line x1="'+left+'" y1="'+y+'" x2="'+right+'" y2="'+y+'" stroke="#263650" stroke-dasharray="3 7"/><text x="'+(left-10)+'" y="'+(y+4)+'" fill="#91a4c4" font-size="11" text-anchor="end">'+money(v)+'</text>'}).join('');
+ const pointMarkup=pts.map((p,i)=>'<circle class="chart-point" data-index="'+i+'" cx="'+p.x.toFixed(2)+'" cy="'+p.y.toFixed(2)+'" r="10" fill="transparent" stroke="transparent" tabindex="0" role="img" aria-label="'+new Date(p.time).toLocaleString('it-IT')+' · '+money(p.price)+'"/><circle cx="'+p.x.toFixed(2)+'" cy="'+p.y.toFixed(2)+'" r="1.8" fill="#a7f3df" opacity=".75" pointer-events="none"/>').join('');
+ el.innerHTML='<defs><linearGradient id="chartFill" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#79e0c3" stop-opacity=".32"/><stop offset="100%" stop-color="#79e0c3" stop-opacity="0"/></linearGradient><linearGradient id="chartLine" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#70a9ff"/><stop offset="55%" stop-color="#79e0c3"/><stop offset="100%" stop-color="#b2ffe8"/></linearGradient><filter id="chartGlow" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="3" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>'+grid+'<path d="'+area+'" fill="url(#chartFill)"/><path d="'+path+'" fill="none" stroke="url(#chartLine)" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round" filter="url(#chartGlow)"/><g id="chartHover" pointer-events="none" visibility="hidden"><line id="chartHoverLine" x1="0" y1="'+top+'" x2="0" y2="'+bottom+'" stroke="#d7e6ff" stroke-opacity=".7" stroke-dasharray="4 5"/><circle id="chartHoverRing" cx="0" cy="0" r="8" fill="#79e0c3" fill-opacity=".18" stroke="#79e0c3" stroke-width="1.5"/><circle id="chartHoverDot" cx="0" cy="0" r="3.5" fill="#ffffff" stroke="#79e0c3" stroke-width="2"/><rect id="chartTipBg" x="0" y="0" width="205" height="49" rx="10" fill="#111d32" stroke="#54708e" stroke-opacity=".9"/><text id="chartTipDate" x="0" y="0" fill="#c1cde2" font-size="11"></text><text id="chartTipPrice" x="0" y="0" fill="#a7f3df" font-size="14" font-weight="750"></text></g>'+pointMarkup+'<text x="'+left+'" y="250" fill="#91a4c4" font-size="11">'+new Date(valid[0][0]).toLocaleDateString('it-IT')+'</text><text x="'+right+'" y="250" fill="#91a4c4" font-size="11" text-anchor="end">'+new Date(valid[valid.length-1][0]).toLocaleDateString('it-IT')+'</text>';
+ const hover=el.querySelector('#chartHover');
+ function showPoint(i){const p=pts[Math.max(0,Math.min(pts.length-1,i))],tipX=Math.min(right-212,Math.max(left,p.x+13)),tipY=p.y<top+60?bottom-57:top+4;el.querySelector('#chartHoverLine').setAttribute('x1',p.x);el.querySelector('#chartHoverLine').setAttribute('x2',p.x);el.querySelector('#chartHoverRing').setAttribute('cx',p.x);el.querySelector('#chartHoverRing').setAttribute('cy',p.y);el.querySelector('#chartHoverDot').setAttribute('cx',p.x);el.querySelector('#chartHoverDot').setAttribute('cy',p.y);el.querySelector('#chartTipBg').setAttribute('x',tipX);el.querySelector('#chartTipBg').setAttribute('y',tipY);el.querySelector('#chartTipDate').setAttribute('x',tipX+10);el.querySelector('#chartTipDate').setAttribute('y',tipY+17);el.querySelector('#chartTipDate').textContent=new Date(p.time).toLocaleString('it-IT',{dateStyle:'medium',timeStyle:'short'});el.querySelector('#chartTipPrice').setAttribute('x',tipX+10);el.querySelector('#chartTipPrice').setAttribute('y',tipY+37);el.querySelector('#chartTipPrice').textContent=money(p.price);hover.setAttribute('visibility','visible')}
+ function hidePoint(){hover.setAttribute('visibility','hidden')}
+ el.querySelectorAll('.chart-point').forEach(node=>{const show=()=>showPoint(Number(node.dataset.index));node.addEventListener('mouseenter',show);node.addEventListener('focus',show);node.addEventListener('mouseleave',hidePoint);node.addEventListener('blur',hidePoint);node.addEventListener('keydown',ev=>{if(ev.key==='ArrowRight'||ev.key==='ArrowLeft'){ev.preventDefault();const next=Math.max(0,Math.min(pts.length-1,Number(node.dataset.index)+(ev.key==='ArrowRight'?1:-1)));el.querySelector('.chart-point[data-index="'+next+'"]').focus()}})});
+ el.addEventListener('mousemove',ev=>{const rect=el.getBoundingClientRect(),x=(ev.clientX-rect.left)*900/rect.width;showPoint(Math.round(Math.max(0,Math.min(pts.length-1,(x-left)/(right-left)*(pts.length-1)))))});el.addEventListener('mouseleave',hidePoint);
+}
+async function loadHistoricalChart(coin,id,days){
+ if(days==='6h'){
+  const cutoff=Date.now()-6*60*60*1000;
+  if(String(coin.symbol||'').toUpperCase()==='BTC'){
+   const end=new Date().toISOString(),start=new Date(cutoff-60*60*1000).toISOString();
+   try{const r=await fetch('https://api.exchange.coinbase.com/products/BTC-USD/candles?granularity=3600&start='+encodeURIComponent(start)+'&end='+encodeURIComponent(end),{cache:'no-store',headers:{'Accept':'application/json'}});if(r.ok){const rows=await r.json();if(Array.isArray(rows)){const prices=rows.map(row=>[Number(row[0])*1000,Number(row[4])]).filter(p=>p[0]>=cutoff&&Number.isFinite(p[0])&&Number.isFinite(p[1])).sort((a,b)=>a[0]-b[0]);if(prices.length>=2)return {prices,source:'Coinbase'};}}}catch(e){}
+  }
+  const shortUrl='https://api.coingecko.com/api/v3/coins/'+encodeURIComponent(id)+'/market_chart?vs_currency=usd&days=1';
+  try{const r=await fetch(shortUrl,{cache:'no-store'});if(r.ok){const d=await r.json();if(Array.isArray(d.prices)&&d.prices.length>=2){const prices=d.prices.filter(p=>Number(p[0])>=cutoff);if(prices.length>=2)return {prices,source:'CoinGecko'};}}}catch(e){}
+ }
+ if(days==='7'&&Array.isArray(coin.history_7d)&&coin.history_7d.length>=2)return {prices:coin.history_7d,source:'CoinMarketCap'};
+ const cgDays=days==='6h'?'1':days;
+ const cgUrl='https://api.coingecko.com/api/v3/coins/'+encodeURIComponent(id)+'/market_chart?vs_currency=usd&days='+encodeURIComponent(cgDays)+(cgDays==='365'||cgDays==='max'?'&interval=daily':'');
+ try{const r=await fetch(cgUrl,{cache:'no-store'});if(r.ok){const d=await r.json();if(Array.isArray(d.prices)&&d.prices.length>=2){const prices=days==='6h'?d.prices.filter(p=>Number(p[0])>=Date.now()-6*60*60*1000):d.prices;if(prices.length>=2)return {prices,source:'CoinGecko'};}}}catch(e){}
+ const symbol=String(coin.symbol||'').toUpperCase().replace(/[^A-Z0-9]/g,'');
+ const interval=days==='1'?'15m':days==='7'?'1h':days==='30'?'4h':'1d';
+ const limit=days==='1'?96:days==='7'?168:days==='30'?180:days==='365'?365:1000;
+ if(!symbol)return null;
+ for(const suffix of ['USDT','USDC','BTC']){try{const r=await fetch('https://api.binance.com/api/v3/klines?symbol='+encodeURIComponent(symbol+suffix)+'&interval='+interval+'&limit='+limit,{cache:'no-store'});if(!r.ok)continue;const rows=await r.json();if(Array.isArray(rows)&&rows.length>=2){const prices=rows.map(row=>[Number(row[0]),Number(row[4])]).filter(p=>Number.isFinite(p[0])&&Number.isFinite(p[1]));if(prices.length>=2)return {prices,source:'Binance'};}}catch(e){}}
+ return null;
+}
+async function load(){const requestedId=new URLSearchParams(location.search).get('id');let id=requestedId==='BNB'||requestedId==='bnb'?'binancecoin':requestedId;if(!id||!/^[a-z0-9-]{1,100}$/i.test(id)){$('coinName').textContent='Criptovaluta non riconosciuta';$('coinStatus').textContent='Torna alla classifica globale e scegli una criptovaluta.';return}try{const response=await fetch('data/market/cmc-market.json',{cache:'no-store'});if(!response.ok)throw Error('Cache HTTP '+response.status);const cache=await response.json();const requested=String(requestedId||id).toLowerCase();const coin=(cache.coins||[]).find(c=>String(c.id||'').toLowerCase()===String(id).toLowerCase()||String(c.symbol||'').toLowerCase()===requested);if(!coin)throw Error('Asset non presente nella cache CMC');id=coin.id||id;currentCoinId=id;const chart=await loadHistoricalChart(coin,id,currentDays);$('coinName').textContent=coin.name||id.replace(/-/g,' ');$('coinSymbol').textContent=String(coin.symbol||'').toUpperCase()+' · Rank #'+(coin.rank||'—');$('coinPrice').textContent=money(coin.price);const change=coin.change_24h;$('coinChange').textContent=(Number.isFinite(change)?(change>=0?'+':'')+change.toFixed(2)+'% nelle ultime 24h':'Variazione 24h non disponibile');$('coinChange').className='change '+(Number.isFinite(change)&&change<0?'down':'up');$('marketCap').textContent=money(coin.market_cap);$('circulating').textContent=supply(coin.circulating_supply);$('totalSupply').textContent=supply(coin.total_supply);$('maxSupply').textContent=supply(coin.max_supply);$('volume').textContent=money(coin.volume_24h);$('high').textContent=Number.isFinite(coin.change_7d)?(coin.change_7d>=0?'+':'')+coin.change_7d.toFixed(2)+'%':'—';$('low').textContent=Number.isFinite(coin.change_30d)?(coin.change_30d>=0?'+':'')+coin.change_30d.toFixed(2)+'%':'—';$('rank').textContent=coin.rank?'#'+coin.rank:'—';$('description').textContent='Dati di mercato forniti da CoinMarketCap. La cache include le prime 300 criptovalute e viene aggiornata automaticamente circa ogni 30 minuti.';$('coinLinks').innerHTML=link('https://coinmarketcap.com/currencies/'+encodeURIComponent(id)+'/','Apri scheda CoinMarketCap');if(chart&&Array.isArray(chart.prices)){drawChart(chart.prices);$('chartStatus').textContent='Intervallo '+({'6h':'6 ore','1':'1 giorno','7':'7 giorni','30':'1 mese','365':'1 anno','max':'Storico disponibile'}[currentDays]||currentDays)+' · fonte '+chart.source+(chart.source==='Binance'&&currentDays==='max'?' · massimo 1000 candele giornaliere':'');}else $('priceChart').innerHTML='<text x="450" y="130" fill="#9eacc5" text-anchor="middle">Storico grafico temporaneamente non disponibile</text>';$('coinStatus').textContent='Cache CoinMarketCap aggiornata '+new Date(cache.updated_at).toLocaleString('it-IT');}catch(e){$('coinName').textContent=(requestedId||'').replace(/-/g,' ');$('coinStatus').textContent='La cache CoinMarketCap non è ancora disponibile o non contiene questa criptovaluta. Riprova tra qualche minuto.';$('description').textContent='La cache viene preparata automaticamente da GitHub Actions.';$('priceChart').innerHTML='<text x="450" y="130" fill="#9eacc5" text-anchor="middle">Grafico non disponibile</text>'}}document.querySelectorAll('[data-days]').forEach(btn=>btn.addEventListener('click',()=>{currentDays=btn.dataset.days;document.querySelectorAll('[data-days]').forEach(b=>b.classList.toggle('active',b===btn));$('chartStatus').textContent='Caricamento intervallo…';load()}));load();setInterval(()=>{if(!document.hidden)load()},120000);
+</script></main></body></html>
