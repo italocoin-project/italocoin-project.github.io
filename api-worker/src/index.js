@@ -37,8 +37,9 @@ async function countRequest(env, key) {
   const row = await env.DB.prepare(
     "INSERT INTO usage_daily(api_key_id,usage_date,requests) VALUES(?,?,1) " +
     "ON CONFLICT(api_key_id,usage_date) DO UPDATE SET requests=requests+1 " +
-    "RETURNING requests"
-  ).bind(key.id, date).first();
+    "WHERE usage_daily.requests < ? RETURNING requests"
+  ).bind(key.id, date, key.daily_limit).first();
+  if (!row) return null;
   await env.DB.prepare("UPDATE api_keys SET last_used_at=datetime('now') WHERE id=?").bind(key.id).run();
   return row.requests;
 }
@@ -102,7 +103,7 @@ export default {
         const key = await authenticate(request, env);
         if (!key) return json({ error: "invalid_api_key", message: "Send a valid key in the x-api-key header." }, 401, headers);
         const used = await countRequest(env, key);
-        if (used > key.daily_limit) return json({
+        if (used === null) return json({
           error: "daily_limit_exceeded", plan: key.plan, daily_limit: key.daily_limit,
           requests_today: used, reset_at: new Date(Date.now() + (86400000 - (Date.now() % 86400000))).toISOString()
         }, 429, { ...headers, "retry-after": String(Math.max(1, Math.ceil((86400000 - (Date.now() % 86400000)) / 1000))) });
