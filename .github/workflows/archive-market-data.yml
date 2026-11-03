@@ -1,38 +1,39 @@
 name: Archive public exchange market data
-
 on:
-  push:
-    paths:
-      - ".github/workflows/archive-market-data.yml"
-      - "scripts/archive_market_data.py"
   schedule:
     - cron: "*/5 * * * *"
   workflow_dispatch:
-
 permissions:
   contents: write
-
 concurrency:
   group: public-market-archive
   cancel-in-progress: false
-
 jobs:
   collect:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v5
-      - name: Collect public spot prices
-        run: python3 scripts/archive_market_data.py
+      - uses: actions/checkout@v4
+      - name: Collect Binance spot prices
+        run: |
+          set -euo pipefail
+          mkdir -p data/market
+          DATE=$(date -u +%F)
+          TS=$(date -u +%Y-%m-%dT%H:%M:%SZ)
+          QUOTES="{}"
+          for SYMBOL in BTC ETH BNB SOL XRP ADA DOGE TRX TON AVAX LINK DOT LTC BCH XLM UNI AAVE NEAR ETC FIL ICP ATOM ARB OP SUI SHIB PEPE INJ SEI HBAR; do
+            PRICE=$(curl -fsS --max-time 12 "https://api.binance.com/api/v3/ticker/price?symbol=${SYMBOL}USDT" | jq -r ".price // empty" || true)
+            if [ -n "$PRICE" ]; then
+              QUOTES=$(jq -cn --argjson old "$QUOTES" --arg sym "$SYMBOL" --argjson p "$PRICE" '$old + {($sym): {binance: $p}} ')
+            fi
+          done
+          [ "$QUOTES" != "{}" ] || { echo "No valid prices returned"; exit 1; }
+          jq -cn --arg ts "$TS" --argjson q "$QUOTES" '{timestamp_utc:$ts,source:"public_spot_ticker_apis",quotes:$q}' >> "data/market/${DATE}.jsonl"
       - name: Commit archive
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add data/market
-          if git diff --cached --quiet; then
-            echo "No archive changes"
-            exit 0
-          fi
-          git commit -m "Archive public exchange prices $(date -u +'%Y-%m-%d %H:%M UTC')"
+          if git diff --cached --quiet; then echo "No archive changes"; exit 0; fi
+          git commit -m "Archive public exchange prices"
           git push
