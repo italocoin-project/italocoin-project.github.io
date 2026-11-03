@@ -5,7 +5,7 @@ const json = (data, status = 200, extra = {}) => new Response(JSON.stringify(dat
 const cors = (request, env) => ({
   "access-control-allow-origin": env.CORS_ORIGIN || "https://italocoin-project.github.io",
   "access-control-allow-methods": "GET,POST,OPTIONS",
-  "access-control-allow-headers": "content-type,authorization,x-api-key",
+  "access-control-allow-headers": "content-type,authorization,x-api-key,x-watchlist-key",
   "vary": "Origin"
 });
 const hex = bytes => [...new Uint8Array(bytes)].map(b => b.toString(16).padStart(2, "0")).join("");
@@ -32,6 +32,30 @@ async function authenticate(request, env) {
   return env.DB.prepare("SELECT id,label,plan,daily_limit,active FROM api_keys WHERE key_hash=? AND active=1")
     .bind(keyHash).first();
 }
+
+async function watchlistKey(request) {
+  const key = request.headers.get("x-watchlist-key") || "";
+  if (!/^fpe_watch_[a-f0-9]{64}$/.test(key)) return null;
+  return sha256(key);
+}
+async function handleWatchlist(request, env, headers) {
+  const keyHash = await watchlistKey(request);
+  if (!keyHash) return json({ error: "invalid_watchlist_key", message: "Provide a valid x-watchlist-key." }, 401, headers);
+  if (request.method === "GET") {
+    const row = await env.DB.prepare("SELECT symbols,updated_at FROM watchlists WHERE key_hash=?").bind(keyHash).first();
+    return json({ symbols: row ? JSON.parse(row.symbols) : [], updated_at: row?.updated_at || null }, 200, headers);
+  }
+  if (request.method === "PUT") {
+    let body;
+    try { body = await request.json(); } catch { return json({ error: "invalid_json" }, 400, headers); }
+    if (!Array.isArray(body.symbols) || body.symbols.length > 100) return json({ error: "invalid_symbols", message: "symbols must be an array with at most 100 entries." }, 400, headers);
+    const symbols = [...new Set(body.symbols.map(x => String(x).trim().toUpperCase()).filter(x => /^[A-Z0-9.-]{1,15}$/.test(x)))].slice(0, 100);
+    await env.DB.prepare("INSERT INTO watchlists(key_hash,symbols,updated_at) VALUES(?,?,datetime('now')) ON CONFLICT(key_hash) DO UPDATE SET symbols=excluded.symbols,updated_at=datetime('now')").bind(keyHash, JSON.stringify(symbols)).run();
+    return json({ saved: true, symbols, updated_at: new Date().toISOString() }, 200, headers);
+  }
+  return json({ error: "method_not_allowed" }, 405, headers);
+}
+
 async function countRequest(env, key) {
   const date = today();
   const row = await env.DB.prepare(
@@ -49,7 +73,8 @@ export default {
     if (request.method === "OPTIONS") return new Response(null, { headers });
     const url = new URL(request.url);
     try {
-      if (url.pathname === "/health") return json({ ok: true, service: "Finance Pattern Engine API", version: "1.0.0" }, 200, headers);
+      if (url.pathname === "/health") return json({ ok: true, service: "Finance Pattern Engine API", version: "1.1.0", watchlist_sync: true }, 200, headers);
+      if (url.pathname === "/v1/watchlist") return handleWatchlist(request, env, headers);
 
       if (url.pathname.startsWith("/admin/")) {
         if (!(await admin(request, env))) return json({ error: "unauthorized" }, 401, headers);
