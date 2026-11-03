@@ -3,7 +3,7 @@
   "info": {
     "title": "Finance Pattern Engine Market Data API",
     "version": "1.0.0",
-    "description": "Static, read-only public crypto market data feed. Source data subject to provider terms and availability."
+    "description": "Static, read-only public crypto market data feed. Source data subject to provider terms and availability. Protected API Worker endpoints require a separately deployed Cloudflare Worker; replace YOUR-WORKER with its assigned hostname."
   },
   "servers": [
     {
@@ -61,6 +61,59 @@
           },
           "404": {
             "description": "Archive not found"
+          }
+        }
+      }
+    },
+    "/v1/coins": {
+      "get": {
+        "summary": "Get authenticated market snapshot from the Cloudflare API Worker",
+        "description": "Requires a deployed Worker and a valid API key. Daily quotas depend on the assigned plan.",
+        "servers": [
+          {
+            "url": "https://YOUR-WORKER.workers.dev"
+          }
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Market snapshot and quota metadata"
+          },
+          "401": {
+            "description": "Missing or invalid API key"
+          },
+          "429": {
+            "description": "Daily request quota exceeded"
+          },
+          "502": {
+            "description": "Market data source unavailable"
+          }
+        }
+      }
+    },
+    "/v1/usage": {
+      "get": {
+        "summary": "Get usage history for the authenticated API key",
+        "servers": [
+          {
+            "url": "https://YOUR-WORKER.workers.dev"
+          }
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Daily request counts for the last 30 days"
+          },
+          "401": {
+            "description": "Missing or invalid API key"
           }
         }
       }
@@ -181,6 +234,13 @@
             "format": "date-time"
           }
         }
+      }
+    },
+    "securitySchemes": {
+      "ApiKeyAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "x-api-key"
       }
     }
   }
