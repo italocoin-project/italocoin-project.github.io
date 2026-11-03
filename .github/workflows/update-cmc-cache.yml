@@ -54,7 +54,7 @@ jobs:
           out.write_text(json.dumps({
               "updated_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
               "source": "CoinMarketCap API", "count": len(coins), "coins": coins
-          }, ensure_ascii=False, separators=(",", ":")) + "\\n", encoding="utf-8")
+          }, ensure_ascii=False, separators=(",", ":")) + "\n", encoding="utf-8")
           print("Updated", out, "with", len(coins), "assets")
           PY
       - name: Commit updated cache
