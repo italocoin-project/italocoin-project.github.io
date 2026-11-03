@@ -1,0 +1,41 @@
+name: Update CoinMarketCap static cache
+
+on:
+  push:
+    paths:
+      - ".github/workflows/update-cmc-cache.yml"
+      - "scripts/update_cmc_cache.py"
+  schedule:
+    - cron: "7,37 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: cmc-static-cache
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+      - name: Fetch CoinMarketCap market rankings
+        env:
+          CMC_API_KEY: ${{ secrets.CMC_API_KEY }}
+        run: python3 scripts/update_cmc_cache.py
+      - name: Commit cache
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/market/cmc-market.json
+          if git diff --cached --quiet; then
+            echo "No cache changes"
+            exit 0
+          fi
+          git commit -m "Refresh CoinMarketCap static market cache"
+          git pull --rebase origin main
+          git push
