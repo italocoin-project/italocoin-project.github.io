@@ -66,12 +66,8 @@ $('search').addEventListener('input',()=>{page=1;render()});$('sort').addEventLi
     };
     document.head.appendChild(s);
   };
-  if (typeof window.__tcfapi === 'function') {
-    window.__tcfapi('addEventListener',2,function(tcData,success){
-      if (!success || !tcData) return;
-      if (tcData.eventStatus==='tcloaded' || tcData.eventStatus==='useractioncomplete') loadAds();
-    });
-  }
+  /* Once the European message is published in AdSense, its CMP is delivered through the AdSense integration. */
+  loadAds();
 })();
 </script>
 </body></html>
