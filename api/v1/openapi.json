@@ -2,7 +2,7 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Finance Pattern Engine Market Data API",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "description": "Static, read-only public crypto market data feed. Source data subject to provider terms and availability. Protected API Worker endpoints require a separately deployed Cloudflare Worker; replace YOUR-WORKER with its assigned hostname."
   },
   "servers": [
@@ -114,6 +114,78 @@
           },
           "401": {
             "description": "Missing or invalid API key"
+          }
+        }
+      }
+    },
+    "/v1/watchlist": {
+      "get": {
+        "summary": "Download a private watchlist",
+        "description": "Requires the private sync code in x-watchlist-key. Anyone holding this bearer secret can read and replace the associated watchlist.",
+        "servers": [
+          {
+            "url": "https://YOUR-WORKER.workers.dev"
+          }
+        ],
+        "security": [
+          {
+            "WatchlistKeyAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Saved ticker symbols and update timestamp"
+          },
+          "401": {
+            "description": "Missing or invalid watchlist key"
+          }
+        }
+      },
+      "put": {
+        "summary": "Replace a private watchlist",
+        "description": "Stores up to 100 ticker symbols. The client-generated secret is stored only as a SHA-256 hash.",
+        "servers": [
+          {
+            "url": "https://YOUR-WORKER.workers.dev"
+          }
+        ],
+        "security": [
+          {
+            "WatchlistKeyAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "symbols"
+                ],
+                "properties": {
+                  "symbols": {
+                    "type": "array",
+                    "maxItems": 100,
+                    "items": {
+                      "type": "string",
+                      "maxLength": 15
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Watchlist saved"
+          },
+          "400": {
+            "description": "Invalid ticker list"
+          },
+          "401": {
+            "description": "Missing or invalid watchlist key"
           }
         }
       }
@@ -241,6 +313,11 @@
         "type": "apiKey",
         "in": "header",
         "name": "x-api-key"
+      },
+      "WatchlistKeyAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "x-watchlist-key"
       }
     }
   }
