@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Come leggere lo storico dei prezzi crypto | Finance Pattern Engine</title>
+<meta name="description" content="Guida pratica a grafici crypto orari, confronti su 24 ore, settimane, mesi e anni, fonti dati e limiti dello storico.">
+<meta name="theme-color" content="#070b16">
+<style>
+:root{color-scheme:dark;--bg:#070b16;--panel:#10182a;--line:#25334d;--text:#f2f6ff;--muted:#aebbd3;--accent:#71f0cb}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 12% 0%,rgba(69,110,190,.2),transparent 34%),var(--bg);color:var(--text);font:16px/1.8 system-ui,sans-serif}main{max-width:850px;margin:auto;padding:28px 20px 72px}.back,a{color:var(--accent)}.eyebrow{text-transform:uppercase;letter-spacing:.14em;font-size:12px;font-weight:800;color:var(--accent)}h1{font-size:clamp(34px,6vw,54px);line-height:1.08;letter-spacing:-.04em;margin:.4em 0}h2{margin-top:1.8em;line-height:1.25}p,li{color:var(--muted)}.panel{background:linear-gradient(145deg,#142039,#0d1424);border:1px solid var(--line);border-radius:18px;padding:20px;margin:22px 0}.pill{display:inline-block;border:1px solid #35516b;border-radius:99px;padding:4px 10px;font-size:12px;color:var(--accent)}footer{border-top:1px solid var(--line);padding-top:20px;font-size:13px;color:var(--muted)}
+</style>
+</head>
+<body><main>
+<a class="back" href="../index.html">← Torna al monitor</a>
+<p class="eyebrow">Guida · Dati e mercati</p>
+<h1>Come leggere lo storico dei prezzi crypto</h1>
+<p>Un grafico è utile solo se sai da dove arrivano i dati, quale periodo copre e quali informazioni mancano. Questa guida spiega come leggere le quotazioni archiviate da Finance Pattern Engine senza confondere il prezzo di mercato con i movimenti di denaro reali.</p>
+<div class="panel"><span class="pill">Da ricordare</span><p><strong>Prezzi pubblici e transazioni sono cose diverse.</strong> Una quotazione dice a quanto un mercato scambia un asset in un certo momento; non dimostra che una persona abbia comprato, venduto o trasferito quell'asset.</p></div>
+<h2>1. Confronto orario, 24 ore e periodi più lunghi</h2>
+<p>Le finestre da una a ventiquattro ore aiutano a osservare variazioni di breve periodo. I confronti a 7 giorni, 30 giorni, 90 giorni e un anno mostrano contesti più ampi. Per confrontare due finestre, controlla sempre l'ora e il fuso orario: questo archivio usa timestamp UTC.</p>
+<p>Un campione raccolto una volta all'ora non contiene ogni oscillazione avvenuta nel mezzo. Due punti possono mostrare il cambiamento tra le rilevazioni, ma non il percorso completo del prezzo.</p>
+<h2>2. Perché gli exchange possono mostrare prezzi diversi</h2>
+<p>Ogni exchange ha un proprio libro ordini, liquidità, coppie di scambio e regole di quotazione. BTC-USDT e BTC-USD non sono la stessa coppia: USDT è una stablecoin e il suo valore può discostarsi dal dollaro. Anche volume, spread, commissioni e slippage incidono su un eventuale confronto operativo.</p>
+<ul><li>Verifica sempre la coppia esatta e la valuta di quotazione.</li><li>Non interpretare una differenza di prezzo come profitto garantito.</li><li>Se un'API non risponde o una coppia non esiste, il dato deve risultare mancante, non stimato.</li></ul>
+<h2>3. Come viene costruito l'archivio</h2>
+<p>Il progetto usa un'attività pianificata di GitHub Actions per interrogare endpoint pubblici di Binance, Coinbase, OKX e Kraken e registrare campioni JSONL nel repository. L'archivio parte dalla prima raccolta riuscita: non ricostruisce retroattivamente prezzi mancanti e può contenere errori o valori assenti quando un servizio limita le richieste.</p>
+<p>Un dato archiviato è accompagnato da un timestamp e dalla fonte. Il repository permette di controllare il codice di raccolta e i file conservati. Non è però un database professionale con garanzia di disponibilità né una fonte ufficiale degli exchange.</p>
+<h2>4. Prezzi, trasferimenti e block explorer</h2>
+<p>Gli scambi interni a Binance o Coinbase possono essere registrati nei sistemi dell'exchange senza generare una transazione pubblica su blockchain. Un block explorer può verificare solo transazioni effettivamente registrate su una rete supportata, usando hash, indirizzo o altri identificatori pubblici. Un prelievo verso un wallet può avere un hash on-chain; un acquisto interno spesso no.</p>
+<p>Per analizzare movimenti personali, importa soltanto esportazioni legittimamente ottenute dal tuo account. Non condividere password, seed phrase o chiavi API private. Le API pubbliche dei prezzi non consentono di ricavare la cronologia privata degli utenti.</p>
+<h2>5. Come evitare conclusioni fuorvianti</h2>
+<ul><li>Controlla l'ora dell'ultimo aggiornamento e il numero di campioni disponibili.</li><li>Non confrontare periodi incompleti come se fossero completi.</li><li>Considera che un indicatore tecnico descrive i dati passati e non predice con certezza il futuro.</li><li>Conserva la fonte e la data di ogni valore usato in un'analisi.</li></ul>
+<div class="panel"><h2 style="margin-top:0">Apri lo storico</h2><p>Nel monitor seleziona l'asset, l'exchange e il periodo. Se non esistono almeno due campioni reali, il grafico non può calcolare una variazione significativa.</p><a href="../index.html#savedMarketHistory">Vai allo storico prezzi →</a></div>
+<footer><p>Contenuto educativo, non consulenza finanziaria, fiscale o legale. I dati dipendono da servizi esterni e possono essere incompleti.</p><a href="../privacy.html">Privacy</a> · <a href="../terms.html">Note legali</a> · <a href="https://github.com/italocoin-project/finance-pattern-engine">Repository GitHub</a></footer>
+</main></body></html>
