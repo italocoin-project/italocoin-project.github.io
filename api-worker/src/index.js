@@ -89,6 +89,15 @@ export default {
         return json({ error: "not_found" }, 404, headers);
       }
 
+      if (url.pathname === "/v1/usage" && request.method === "GET") {
+        const key = await authenticate(request, env);
+        if (!key) return json({ error: "invalid_api_key" }, 401, headers);
+        const result = await env.DB.prepare(
+          "SELECT usage_date,requests FROM usage_daily WHERE api_key_id=? ORDER BY usage_date DESC LIMIT 30"
+        ).bind(key.id).all();
+        return json({ plan: key.plan, daily_limit: key.daily_limit, usage: result.results || [] }, 200, headers);
+      }
+
       if (url.pathname === "/v1/coins" && request.method === "GET") {
         const key = await authenticate(request, env);
         if (!key) return json({ error: "invalid_api_key", message: "Send a valid key in the x-api-key header." }, 401, headers);
