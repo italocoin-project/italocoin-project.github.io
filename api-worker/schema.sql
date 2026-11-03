@@ -20,3 +20,10 @@ CREATE TABLE IF NOT EXISTS usage_daily (
   FOREIGN KEY (api_key_id) REFERENCES api_keys(id)
 );
 CREATE INDEX IF NOT EXISTS idx_usage_daily_date ON usage_daily(usage_date);
+
+-- Private watchlists are addressed by a client-generated secret whose SHA-256 hash is stored.
+CREATE TABLE IF NOT EXISTS watchlists (
+  key_hash TEXT PRIMARY KEY,
+  symbols TEXT NOT NULL DEFAULT '[]',
+  updated_at TEXT NOT NULL DEFAULT (datetime('now'))
+);
