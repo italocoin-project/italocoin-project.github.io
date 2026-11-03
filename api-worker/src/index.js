@@ -4,7 +4,7 @@ const json = (data, status = 200, extra = {}) => new Response(JSON.stringify(dat
 });
 const cors = (request, env) => ({
   "access-control-allow-origin": env.CORS_ORIGIN || "https://italocoin-project.github.io",
-  "access-control-allow-methods": "GET,POST,OPTIONS",
+  "access-control-allow-methods": "GET,POST,PUT,OPTIONS",
   "access-control-allow-headers": "content-type,authorization,x-api-key,x-watchlist-key",
   "vary": "Origin"
 });
