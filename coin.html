@@ -33,18 +33,17 @@
  .nav{align-items:flex-start}
  #chartRanges{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
+/* Consistent navigation and readable legal footer */
+.site-footer{display:flex;flex-wrap:wrap;gap:12px 20px;justify-content:space-between;align-items:center;margin:26px 0 0;padding:18px 4px;border-top:1px solid rgba(145,168,210,.16);font-size:12px;color:var(--muted)}
+.site-footer a{color:var(--accent)}
+.hero,.panel{box-shadow:0 16px 44px rgba(0,0,0,.16)}
+button:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+@media(max-width:600px){.site-footer{display:grid;gap:9px}}
 </style>
 
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7976130141061747" crossorigin="anonymous"></script>
-  <meta name="google-adsense-account" content="ca-pub-7976130141061747">
 </head>
 <body><main>
 <nav class="nav"><a class="brand" href="./">← Finance Pattern Engine</a><a class="button" href="markets.html">Classifica globale</a></nav>
-<div class="adsense-slot" style="max-width:100%;margin:18px auto 24px;text-align:center;overflow:hidden">
-  <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-7976130141061747" data-ad-slot="6742701340" data-ad-format="auto" data-full-width-responsive="true"></ins>
-</div>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-
 <section class="hero">
  <div class="hero-head"><img id="coinImage" class="coin-icon" alt="" hidden><div><div class="muted">SCHEDA CRIPTOVALUTA</div><h1 id="coinName">Caricamento dati…</h1><div id="coinSymbol" class="symbol">—</div></div></div>
  <div id="coinPrice" class="price">—</div><div id="coinChange" class="change">—</div><p id="coinStatus" class="status" role="status" aria-live="polite">Caricamento da CoinGecko…</p>
@@ -106,4 +105,4 @@ async function loadHistoricalChart(coin,id,days){
  return null;
 }
 async function load(){const requestedId=new URLSearchParams(location.search).get('id');let id=requestedId==='BNB'||requestedId==='bnb'?'binancecoin':requestedId;if(!id||!/^[a-z0-9-]{1,100}$/i.test(id)){$('coinName').textContent='Criptovaluta non riconosciuta';$('coinStatus').textContent='Torna alla classifica globale e scegli una criptovaluta.';return}try{const response=await fetch('data/market/cmc-market.json',{cache:'no-store'});if(!response.ok)throw Error('Cache HTTP '+response.status);const cache=await response.json();const requested=String(requestedId||id).toLowerCase();const coin=(cache.coins||[]).find(c=>String(c.id||'').toLowerCase()===String(id).toLowerCase()||String(c.symbol||'').toLowerCase()===requested);if(!coin)throw Error('Asset non presente nella cache CMC');id=coin.id||id;currentCoinId=id;const chart=await loadHistoricalChart(coin,id,currentDays);$('coinName').textContent=coin.name||id.replace(/-/g,' ');$('coinSymbol').textContent=String(coin.symbol||'').toUpperCase()+' · Rank #'+(coin.rank||'—');$('coinPrice').textContent=money(coin.price);const change=coin.change_24h;$('coinChange').textContent=(Number.isFinite(change)?(change>=0?'+':'')+change.toFixed(2)+'% nelle ultime 24h':'Variazione 24h non disponibile');$('coinChange').className='change '+(Number.isFinite(change)&&change<0?'down':'up');$('marketCap').textContent=money(coin.market_cap);$('circulating').textContent=supply(coin.circulating_supply);$('totalSupply').textContent=supply(coin.total_supply);$('maxSupply').textContent=supply(coin.max_supply);$('volume').textContent=money(coin.volume_24h);$('high').textContent=Number.isFinite(coin.change_7d)?(coin.change_7d>=0?'+':'')+coin.change_7d.toFixed(2)+'%':'—';$('low').textContent=Number.isFinite(coin.change_30d)?(coin.change_30d>=0?'+':'')+coin.change_30d.toFixed(2)+'%':'—';$('rank').textContent=coin.rank?'#'+coin.rank:'—';$('description').textContent='Dati di mercato forniti da CoinMarketCap. La cache include le prime 300 criptovalute e viene aggiornata automaticamente circa ogni 30 minuti.';$('coinLinks').innerHTML=link('https://coinmarketcap.com/currencies/'+encodeURIComponent(id)+'/','Apri scheda CoinMarketCap');if(chart&&Array.isArray(chart.prices)){drawChart(chart.prices);$('chartStatus').textContent='Intervallo '+({'6h':'6 ore','1':'1 giorno','7':'7 giorni','30':'1 mese','365':'1 anno','max':'Storico disponibile'}[currentDays]||currentDays)+' · fonte '+chart.source+(chart.source==='Binance'&&currentDays==='max'?' · massimo 1000 candele giornaliere':'');}else $('priceChart').innerHTML='<text x="450" y="130" fill="#9eacc5" text-anchor="middle">Storico grafico temporaneamente non disponibile</text>';$('coinStatus').textContent='Cache CoinMarketCap aggiornata '+new Date(cache.updated_at).toLocaleString('it-IT');}catch(e){$('coinName').textContent=(requestedId||'').replace(/-/g,' ');$('coinStatus').textContent='La cache CoinMarketCap non è ancora disponibile o non contiene questa criptovaluta. Riprova tra qualche minuto.';$('description').textContent='La cache viene preparata automaticamente da GitHub Actions.';$('priceChart').innerHTML='<text x="450" y="130" fill="#9eacc5" text-anchor="middle">Grafico non disponibile</text>'}}document.querySelectorAll('[data-days]').forEach(btn=>btn.addEventListener('click',()=>{currentDays=btn.dataset.days;document.querySelectorAll('[data-days]').forEach(b=>b.classList.toggle('active',b===btn));$('chartStatus').textContent='Caricamento intervallo…';load()}));load();setInterval(()=>{if(!document.hidden)load()},120000);
-</script></main></body></html>
+</script><footer class="site-footer"><span>Finance Pattern Engine · Dati informativi, non consulenza finanziaria</span><span><a href="privacy.html">Privacy</a> · <a href="cookie.html">Cookie</a> · <a href="terms.html">Note legali</a></span></footer></main></body></html>
