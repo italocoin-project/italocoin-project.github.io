@@ -45,6 +45,23 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{ou
 @media(max-width:850px){.summary-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:600px){.nav{position:static;align-items:flex-start}.nav-links{width:100%}.market-hero{padding:23px 18px;border-radius:18px}.summary-grid{gap:8px}.summary-card{padding:13px}.summary-card strong{font-size:19px}.controls{grid-template-columns:1fr}.controls input[type=search]{grid-column:auto}.asset{min-width:170px}.table-wrap{max-height:68vh}}
 
+
+.analytics-panel,.trending-panel,.watchlist-panel{margin-top:16px}
+.charts-grid{display:grid;grid-template-columns:1fr 1.4fr;gap:12px;margin-top:16px}
+.chart-card{min-width:0;padding:17px;border:1px solid rgba(145,168,210,.14);border-radius:15px;background:rgba(5,10,21,.27)}
+.chart-title{font-size:13px;font-weight:800}.chart-subtitle,.chart-note{font-size:11px;color:var(--muted);margin-top:5px}
+.donut-layout{display:flex;align-items:center;gap:18px;margin-top:12px}.donut{width:158px;height:158px;flex:0 0 158px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(#79e0c3 0deg,#8caeff 45deg,#f7c873 90deg,#e88ea4 135deg,#b69aff 180deg,#64c7d8 225deg,#d2a679 270deg,#7b91ac 315deg);position:relative}
+.donut:before{content:"";position:absolute;inset:25px;border-radius:50%;background:#101827}.donut>div{position:relative;text-align:center}.donut strong{display:block;font-size:20px}.donut small{display:block;color:var(--muted);font-size:10px}
+.chart-legend{display:grid;gap:7px;min-width:0}.legend-row{display:flex;align-items:center;gap:7px;font-size:11px;color:#c8d4e8}.legend-dot{width:8px;height:8px;border-radius:3px;flex:0 0 8px}.legend-row b{margin-left:auto;font-variant-numeric:tabular-nums}
+#globalTrendChart{width:100%;height:auto;min-height:180px;margin-top:8px;overflow:visible}.line-legend{display:flex;gap:12px;flex-wrap:wrap;font-size:11px;color:var(--muted)}.line-legend span{display:inline-flex;align-items:center;gap:5px}.line-legend i{width:9px;height:9px;border-radius:50%}
+.breadth-card{grid-column:1/-1}.breadth-chart{display:grid;gap:12px;margin-top:16px}.breadth-row{display:grid;grid-template-columns:100px 1fr 52px;gap:10px;align-items:center;font-size:12px}.breadth-track{height:13px;background:#1b2940;border-radius:99px;overflow:hidden}.breadth-fill{height:100%;border-radius:99px}.breadth-fill.gain{background:#79e0c3}.breadth-fill.loss{background:#ff9ca8}.breadth-fill.flat{background:#8caeff}
+.trend-tabs{display:flex;gap:8px;flex-wrap:wrap;margin:15px 0}.trend-tab{padding:8px 12px;border-radius:9px;background:#111b2d;border:1px solid rgba(145,168,210,.18);font-size:12px;font-weight:750}.trend-tab.active{background:rgba(121,224,195,.13);border-color:rgba(121,224,195,.5);color:var(--accent)}
+.trend-results{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:9px;overflow:visible;padding:0}.trend-chip{display:grid;gap:4px;min-width:0;padding:13px;border:1px solid rgba(145,168,210,.15);border-radius:13px;background:rgba(255,255,255,.025)}.trend-chip span{font-size:11px;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.trend-chip strong{font-size:15px}.trend-chip a{color:var(--text);text-decoration:none}
+.watchlist-items{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}.watch-item{display:flex;align-items:center;gap:8px;padding:9px 11px;border:1px solid rgba(145,168,210,.17);border-radius:11px;background:rgba(255,255,255,.025);font-size:12px}.watch-item a{color:var(--text);font-weight:800;text-decoration:none}.watch-item button{padding:2px 5px;background:none;border:0;color:#ffd166}
+.sync-details{margin-top:16px;border-top:1px solid rgba(145,168,210,.15);padding-top:13px}.sync-details summary{cursor:pointer;font-size:13px;font-weight:800;color:var(--accent)}.sync-details p{font-size:12px;max-width:850px}.sync-controls{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0}.sync-controls label{display:grid;gap:6px;font-size:11px;color:var(--muted)}.sync-controls input{width:100%;min-width:0}.sync-actions{display:flex;gap:8px;flex-wrap:wrap}.sync-actions button{font-size:12px}.sync-actions .secondary{background:#1a2941;border:1px solid var(--line)}
+@media(max-width:850px){.charts-grid{grid-template-columns:1fr}.breadth-card{grid-column:auto}.trend-results{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:600px){.donut-layout{align-items:flex-start;gap:12px}.donut{width:125px;height:125px;flex-basis:125px}.donut:before{inset:20px}.trend-results{grid-template-columns:repeat(2,minmax(0,1fr))}.sync-controls{grid-template-columns:1fr}.breadth-row{grid-template-columns:75px 1fr 42px;gap:7px}}
+
 </style>
 <meta name="google-adsense-account" content="ca-pub-7976130141061747">
 </head><body><main>
@@ -60,10 +77,36 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{ou
  <div class="summary-card"><span>Volume 24h campione</span><strong id="sumVolume">—</strong><small>Somma dei volumi disponibili</small></div>
  <div class="summary-card"><span>Dominanza Bitcoin</span><strong id="sumDominance">—</strong><small>Valore globale fornito dalla fonte</small></div>
 </div>
-<div class="eyebrow" style="margin:8px 0">In evidenza · variazione 24h</div><div id="trending" class="trending"><span class="status">Caricamento asset…</span></div>
+
+<section class="panel analytics-panel">
+ <div class="panel-head"><div><h2>Grafici globali</h2><p>Snapshot degli asset disponibili in cache: distribuzione per capitalizzazione, andamento normalizzato a 7 giorni e ampiezza del mercato.</p></div></div>
+ <div class="charts-grid">
+  <div class="chart-card"><div class="chart-title">Capitalizzazione · top 8</div><div class="donut-layout"><div id="capDonut" class="donut"><div><strong id="capTopShare">—</strong><small>quota top 8</small></div></div><div id="capLegend" class="chart-legend"></div></div><p class="chart-note">Quota calcolata sul totale della capitalizzazione degli asset presenti nella cache.</p></div>
+  <div class="chart-card"><div class="chart-title">Andamento prezzi · 7 giorni</div><div class="chart-subtitle">Indice base 100 · principali asset con storico disponibile</div><svg id="globalTrendChart" viewBox="0 0 720 250" role="img" aria-label="Grafico andamento normalizzato a sette giorni"></svg><div id="trendLegend" class="line-legend"></div></div>
+  <div class="chart-card breadth-card"><div class="chart-title">Ampiezza del mercato · variazione 24h</div><div id="breadthChart" class="breadth-chart"></div><p class="chart-note">Numero di asset in rialzo, in ribasso o invariati tra quelli caricati.</p></div>
+ </div>
+</section>
+<section class="panel trending-panel">
+ <div class="panel-head"><div><h2>Trending</h2><p>Asset più rilevanti per performance e volume, con filtri rapidi.</p></div></div>
+ <div class="trend-tabs" role="group" aria-label="Filtra trending">
+  <button type="button" class="trend-tab active" data-trend="gainers">Top rialzi 24h</button><button type="button" class="trend-tab" data-trend="losers">Top ribassi 24h</button><button type="button" class="trend-tab" data-trend="volume">Volume 24h</button><button type="button" class="trend-tab" data-trend="week">Top rialzi 7g</button>
+ </div>
+ <div id="trending" class="trending trend-results"><span class="status">Caricamento asset…</span></div>
+</section>
+<section class="panel watchlist-panel">
+ <div class="panel-head"><div><h2>La tua watchlist</h2><p>I preferiti restano salvati su questo dispositivo. Attiva la sincronizzazione privata per ritrovarli su altri dispositivi.</p></div><span id="watchlistCount" class="status">0 preferiti</span></div>
+ <div id="watchlistItems" class="watchlist-items"><span class="status">Nessun preferito ancora. Usa ☆ nella classifica.</span></div>
+ <details class="sync-details"><summary>Configura sincronizzazione tra dispositivi</summary>
+  <p>La sincronizzazione usa un codice segreto personale. Chi possiede il codice può leggere e modificare la tua watchlist: conservalo come una password.</p>
+  <div class="sync-controls"><label>URL del Worker API<input id="syncEndpoint" type="url" placeholder="https://tuo-worker.workers.dev"></label><label>Codice privato di sincronizzazione<input id="syncKey" type="password" autocomplete="off" placeholder="Genera un codice o incollane uno"></label></div>
+  <div class="sync-actions"><button id="createSyncKey" type="button">Genera codice</button><button id="copySyncKey" type="button" class="secondary">Copia codice</button><button id="syncUpload" type="button" class="secondary">Carica watchlist</button><button id="syncDownload" type="button" class="secondary">Scarica watchlist</button></div>
+  <p id="syncStatus" class="status" role="status" aria-live="polite">Per la sincronizzazione cloud occorre prima distribuire il Worker API e applicare lo schema D1 aggiornato.</p>
+ </details>
+</section>
+
 <div class="panel-head" style="margin-top:15px"><div><h2>Classifica criptovalute</h2><p>Fino a 300 asset, ordinati per capitalizzazione di mercato.</p></div></div>
 <div class="controls"><input id="search" type="search" placeholder="Cerca nome o ticker…" aria-label="Cerca nella classifica"><select id="sort" aria-label="Ordina classifica"><option value="rank">Rank capitalizzazione</option><option value="market_cap">Capitalizzazione</option><option value="volume">Volume 24h</option><option value="price_change_percentage_24h">Variazione 24h</option><option value="current_price">Prezzo</option><option value="name">Nome</option></select><button id="refresh">Aggiorna</button></div>
-<div class="table-wrap"><table><thead><tr><th>Rank</th><th>Criptovaluta</th><th>Prezzo USD</th><th>24h</th><th>7 giorni</th><th>Capitalizzazione</th><th>Volume 24h</th><th>Supply circolante</th></tr></thead><tbody id="rows"><tr><td colspan="8" style="text-align:center">Caricamento classifica…</td></tr></tbody></table></div>
+<div class="table-wrap"><table><thead><tr><th>☆</th><th>Rank</th><th>Criptovaluta</th><th>Prezzo USD</th><th>24h</th><th>7 giorni</th><th>Capitalizzazione</th><th>Volume 24h</th><th>Supply circolante</th></tr></thead><tbody id="rows"><tr><td colspan="9" style="text-align:center">Caricamento classifica…</td></tr></tbody></table></div>
 <div class="pages"><span id="pageInfo" class="status">Caricamento dati CoinMarketCap…</span><div class="page-buttons"><button id="prev" disabled>← Precedente</button><button id="next" disabled>Successiva →</button></div></div>
 <p id="status" class="status" role="status" aria-live="polite">Dati pubblici CoinMarketCap; possono essere ritardati o limitati.</p>
 <p class="source">La capitalizzazione è la metrica di ordinamento predefinita. Le variazioni percentuali sono indicative e non costituiscono consulenza finanziaria. Se l’API pubblica applica limiti, riprova più tardi.</p>
@@ -72,24 +115,91 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{ou
 <footer class="site-footer"><span>Finance Pattern Engine · Prezzi pubblici, non consulenza finanziaria</span><span><a href="privacy.html">Privacy</a> · <a href="cookie.html">Cookie</a> · <a href="terms.html">Note legali</a> · <a href="developers.html">Developer API</a></span></footer>
 </main>
 <script>
-const $=id=>document.getElementById(id);let page=1,coins=[],busy=false;const perPage=100,base='https://pro-api.coinmarketcap.com/public-api';
+const $=id=>document.getElementById(id);
+let page=1,coins=[],busy=false,trendMode='gainers';
+const perPage=100, WATCH_KEY='fpe_watchlist_v1', SYNC_URL_KEY='fpe_watchlist_endpoint_v1', SYNC_SECRET_KEY='fpe_watchlist_secret_v1';
+const chartColors=['#79e0c3','#8caeff','#f7c873','#e88ea4','#b69aff','#64c7d8','#d2a679','#7b91ac'];
 function fmt(n,compact=false){if(!Number.isFinite(n))return '—';return new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',maximumFractionDigits:n<1?7:2,notation:compact?'compact':'standard'}).format(n)}
 function qty(n){return Number.isFinite(n)?new Intl.NumberFormat('en-US',{notation:'compact',maximumFractionDigits:2}).format(n):'—'}
 function pct(n){return Number.isFinite(n)?(n>0?'+':'')+n.toFixed(2)+'%':'—'}
 function escapeHtml(v){return String(v).replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]))}
-function normalize(c){const q=(c.quote||{}).USD||((Array.isArray(c.quote)?c.quote[0]:null)||{});return {id:c.slug,name:c.name,symbol:c.symbol,market_cap_rank:c.cmc_rank,current_price:q.price,price_change_percentage_24h:q.percent_change_24h,price_change_percentage_7d_in_currency:q.percent_change_7d,market_cap:q.market_cap,total_volume:q.volume_24h,circulating_supply:c.circulating_supply,image:c.logo||''}}
-function render(){const q=$('search').value.trim().toLowerCase(),key=$('sort').value;let list=coins.filter(c=>!q||(c.name+' '+c.symbol).toLowerCase().includes(q));list.sort((a,b)=>key==='name'?a.name.localeCompare(b.name):key==='rank'?(a.market_cap_rank||Infinity)-(b.market_cap_rank||Infinity):(Number(b[key])||0)-(Number(a[key])||0));const pages=Math.max(1,Math.ceil(list.length/perPage));page=Math.min(page,pages);const start=(page-1)*perPage,visible=list.slice(start,start+perPage);$('rows').innerHTML=visible.length?visible.map(c=>'<tr><td>'+(c.market_cap_rank||'—')+'</td><td><a class="asset" href="coin.html?id='+encodeURIComponent(c.symbol)+'">'+(c.image?'<img loading="lazy" src="'+String(c.image).replace(/"/g,'&quot;')+'" alt="">':'')+'<span><span class="coin-name">'+escapeHtml(c.name)+'</span><span class="coin-symbol">'+escapeHtml(String(c.symbol||'').toUpperCase())+'</span></span></a></td><td>'+fmt(c.current_price)+'</td><td class="'+(c.price_change_percentage_24h>=0?'up':'down')+'">'+pct(c.price_change_percentage_24h)+'</td><td class="'+((c.price_change_percentage_7d_in_currency||0)>=0?'up':'down')+'">'+pct(c.price_change_percentage_7d_in_currency)+'</td><td>'+fmt(c.market_cap,true)+'</td><td>'+fmt(c.total_volume,true)+'</td><td>'+qty(c.circulating_supply)+'</td></tr>').join(''):'<tr><td colspan="8" style="text-align:center;padding:24px">Nessun risultato. Modifica la ricerca o aggiorna i dati.</td></tr>';$('pageInfo').textContent=list.length?'Pagina '+page+' di '+pages+' · risultati '+(start+1)+'–'+Math.min(start+perPage,list.length)+' su '+list.length:'0 risultati';$('prev').disabled=busy||page===1;$('next').disabled=busy||page>=pages}
-async function load(){if(busy)return;busy=true;$('status').textContent='Caricamento pagina '+page+' dalla cache CoinMarketCap…';$('refresh').disabled=true;$('prev').disabled=true;$('next').disabled=true;try{const res=await fetch('data/market/cmc-market.json',{cache:'no-store'});if(!res.ok)throw Error('Cache HTTP '+res.status);const json=await res.json();if(!Array.isArray(json.coins))throw Error('Cache non valida');coins=json.coins.map(c=>({id:c.id,name:c.name,symbol:c.symbol,market_cap_rank:c.rank,current_price:c.price,price_change_percentage_24h:c.change_24h,price_change_percentage_7d_in_currency:c.change_7d,market_cap:c.market_cap,total_volume:c.volume_24h,circulating_supply:c.circulating_supply,image:c.logo||''}));
- const sum=(key)=>coins.reduce((a,c)=>a+(Number(c[key])||0),0);
- $('sumAssets').textContent=coins.length.toLocaleString('it-IT');
- $('sumCap').textContent=fmt(sum('market_cap'),true);
- $('sumVolume').textContent=fmt(sum('total_volume'),true);
- $('sumDominance').textContent=Number.isFinite(Number(json.bitcoin_dominance))?Number(json.bitcoin_dominance).toFixed(2)+'%':'—';
- $('updatedAt').textContent='Aggiornato '+new Date(json.updated_at).toLocaleString('it-IT');
- const leaders=[...coins].filter(c=>Number.isFinite(c.price_change_percentage_24h)).sort((a,b)=>b.price_change_percentage_24h-a.price_change_percentage_24h).slice(0,5);
- $('trending').innerHTML=leaders.map(c=>'<div class="trend-chip"><b>'+escapeHtml(c.symbol)+'</b><span>'+escapeHtml(c.name)+'</span><strong class="'+(c.price_change_percentage_24h>=0?'up':'down')+'">'+pct(c.price_change_percentage_24h)+'</strong></div>').join('');
- render();$('status').textContent='Fonte: CoinMarketCap · cache aggiornata '+new Date(json.updated_at).toLocaleString('it-IT')+' · '+coins.length+' asset disponibili';}catch(e){$('status').textContent='La cache CoinMarketCap non è ancora disponibile. Riprova tra qualche minuto mentre il processo automatico prepara i dati.';if(!coins.length)$('rows').innerHTML='<tr><td colspan="8" style="text-align:center;padding:24px">Dati in fase di inizializzazione.</td></tr>';}finally{busy=false;$('refresh').disabled=false;render()}}
-$('search').addEventListener('input',()=>{page=1;render()});$('sort').addEventListener('change',()=>{page=1;render()});$('refresh').addEventListener('click',load);$('prev').addEventListener('click',()=>{if(page>1){page--;render()}});$('next').addEventListener('click',()=>{page++;render()});load();
+function favorites(){try{return [...new Set(JSON.parse(localStorage.getItem(WATCH_KEY)||'[]'))]}catch(e){return[]}}
+function saveFavorites(list){localStorage.setItem(WATCH_KEY,JSON.stringify([...new Set(list)].slice(0,100)));renderWatchlist()}
+function assetBySymbol(symbol){return coins.find(c=>String(c.symbol).toUpperCase()===symbol)}
+function toggleFavorite(symbol){const f=favorites();saveFavorites(f.includes(symbol)?f.filter(x=>x!==symbol):[...f,symbol]);render()}
+function renderWatchlist(){
+ const f=favorites();$('watchlistCount').textContent=f.length+' preferiti';
+ $('watchlistItems').innerHTML=f.length?f.map(sym=>{const c=assetBySymbol(sym);return '<div class="watch-item"><a href="coin.html?id='+encodeURIComponent(sym)+'">'+escapeHtml(sym)+'</a><span>'+(c?escapeHtml(c.name):'')+'</span><strong class="'+(c&&c.price_change_percentage_24h>=0?'up':'down')+'">'+(c?pct(c.price_change_percentage_24h):'')+'</strong><button type="button" data-remove-watch="'+escapeHtml(sym)+'" aria-label="Rimuovi '+escapeHtml(sym)+'">×</button></div>'}).join(''):'<span class="status">Nessun preferito ancora. Usa ☆ nella classifica.</span>';
+ $('watchlistItems').querySelectorAll('[data-remove-watch]').forEach(b=>b.addEventListener('click',()=>saveFavorites(favorites().filter(x=>x!==b.dataset.removeWatch))));
+}
+function render(){
+ const q=$('search').value.trim().toLowerCase(),key=$('sort').value;let list=coins.filter(c=>!q||(c.name+' '+c.symbol).toLowerCase().includes(q));
+ list.sort((a,b)=>key==='name'?a.name.localeCompare(b.name):key==='rank'?(a.market_cap_rank||Infinity)-(b.market_cap_rank||Infinity):(Number(b[key])||0)-(Number(a[key])||0));
+ const pages=Math.max(1,Math.ceil(list.length/perPage));page=Math.min(page,pages);const start=(page-1)*perPage,visible=list.slice(start,start+perPage),fav=favorites();
+ $('rows').innerHTML=visible.length?visible.map(c=>'<tr><td><button class="coin-star '+(fav.includes(c.symbol)?'is-favorite':'')+'" data-star="'+escapeHtml(c.symbol)+'" aria-label="Aggiungi o rimuovi '+escapeHtml(c.name)+' dai preferiti">'+(fav.includes(c.symbol)?'★':'☆')+'</button></td><td>'+(c.market_cap_rank||'—')+'</td><td><a class="asset" href="coin.html?id='+encodeURIComponent(c.symbol)+'">'+(c.image?'<img loading="lazy" src="'+String(c.image).replace(/"/g,'&quot;')+'" alt="">':'')+'<span><span class="coin-name">'+escapeHtml(c.name)+'</span><span class="coin-symbol">'+escapeHtml(String(c.symbol||'').toUpperCase())+'</span></span></a></td><td>'+fmt(c.current_price)+'</td><td class="'+(c.price_change_percentage_24h>=0?'up':'down')+'">'+pct(c.price_change_percentage_24h)+'</td><td class="'+((c.price_change_percentage_7d_in_currency||0)>=0?'up':'down')+'">'+pct(c.price_change_percentage_7d_in_currency)+'</td><td>'+fmt(c.market_cap,true)+'</td><td>'+fmt(c.total_volume,true)+'</td><td>'+qty(c.circulating_supply)+'</td></tr>').join(''):'<tr><td colspan="9" style="text-align:center;padding:24px">Nessun risultato. Modifica la ricerca o aggiorna i dati.</td></tr>';
+ $('rows').querySelectorAll('[data-star]').forEach(b=>b.addEventListener('click',()=>toggleFavorite(b.dataset.star)));
+ $('pageInfo').textContent=list.length?'Pagina '+page+' di '+pages+' · risultati '+(start+1)+'–'+Math.min(start+perPage,list.length)+' su '+list.length:'0 risultati';$('prev').disabled=busy||page===1;$('next').disabled=busy||page>=pages;
+}
+function renderTrending(){
+ const sorted=[...coins].filter(c=>Number.isFinite(c.price_change_percentage_24h));
+ let rows=trendMode==='losers'?sorted.sort((a,b)=>a.price_change_percentage_24h-b.price_change_percentage_24h):
+ trendMode==='volume'?sorted.sort((a,b)=>(b.total_volume||0)-(a.total_volume||0)):
+ trendMode==='week'?sorted.filter(c=>Number.isFinite(c.price_change_percentage_7d_in_currency)).sort((a,b)=>b.price_change_percentage_7d_in_currency-a.price_change_percentage_7d_in_currency):
+ sorted.sort((a,b)=>b.price_change_percentage_24h-a.price_change_percentage_24h);
+ rows=rows.slice(0,10);
+ $('trending').innerHTML=rows.map(c=>{const value=trendMode==='volume'?fmt(c.total_volume,true):pct(trendMode==='week'?c.price_change_percentage_7d_in_currency:c.price_change_percentage_24h);const cls=trendMode==='volume'?'':(Number(trendMode==='week'?c.price_change_percentage_7d_in_currency:c.price_change_percentage_24h)>=0?'up':'down');return '<div class="trend-chip"><a href="coin.html?id='+encodeURIComponent(c.symbol)+'">'+escapeHtml(c.symbol)+'</a><span>'+escapeHtml(c.name)+'</span><strong class="'+cls+'">'+value+'</strong></div>'}).join('')||'<span class="status">Dati non disponibili.</span>';
+ document.querySelectorAll('[data-trend]').forEach(b=>b.classList.toggle('active',b.dataset.trend===trendMode));
+}
+function renderCharts(json){
+ const top=[...coins].filter(c=>Number(c.market_cap)>0).sort((a,b)=>b.market_cap-a.market_cap).slice(0,8),total=coins.reduce((a,c)=>a+(Number(c.market_cap)||0),0),topTotal=top.reduce((a,c)=>a+c.market_cap,0);
+ let angle=0;const stops=top.map((c,i)=>{const next=angle+(total?c.market_cap/total*360:0);const part=chartColors[i%chartColors.length]+' '+angle+'deg '+next+'deg';angle=next;return part}).join(',');
+ $('capDonut').style.background=stops?'conic-gradient('+stops+',#26334a '+angle+'deg 360deg)':'#26334a';
+ $('capTopShare').textContent=total?(topTotal/total*100).toFixed(1)+'%':'—';
+ $('capLegend').innerHTML=top.map((c,i)=>'<div class="legend-row"><i class="legend-dot" style="background:'+chartColors[i%chartColors.length]+'"></i><span>'+escapeHtml(c.symbol)+'</span><b>'+fmt(c.market_cap,true)+'</b></div>').join('');
+ const series=top.slice(0,5).filter(c=>Array.isArray(c.history_7d)&&c.history_7d.length>1);
+ const svg=$('globalTrendChart'),W=720,H=250,L=42,R=12,T=18,B=28,all=series.flatMap(c=>c.history_7d.map(p=>Number(p[1]))).filter(v=>v>0),min=all.length?Math.min(...all):0,max=all.length?Math.max(...all):1;
+ const lines=series.map((c,i)=>{const vals=c.history_7d.map(p=>Number(p[1])).filter(v=>v>0),base=vals[0]||1,pts=vals.map((v,j)=>{const x=L+j*(W-L-R)/Math.max(1,vals.length-1),n=(v/base-1)*100,y=H-B-((n+20)/40)*(H-T-B);return x+','+Math.max(T,Math.min(H-B,y))}).join(' ');return '<polyline points="'+pts+'" fill="none" stroke="'+chartColors[i]+'" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>'}).join('');
+ const grid=[-20,-10,0,10,20].map(v=>{const y=H-B-((v+20)/40)*(H-T-B);return '<line x1="'+L+'" y1="'+y+'" x2="'+(W-R)+'" y2="'+y+'" stroke="#293650" stroke-dasharray="4 5"/><text x="5" y="'+(y+4)+'" fill="#9eacc5" font-size="11">'+v+'%</text>'}).join('');
+ svg.innerHTML=grid+lines;
+ $('trendLegend').innerHTML=series.map((c,i)=>'<span><i style="background:'+chartColors[i]+'"></i>'+escapeHtml(c.symbol)+'</span>').join('')||'<span>Storico a 7 giorni non disponibile nella cache.</span>';
+ const up=coins.filter(c=>Number(c.price_change_percentage_24h)>0).length,down=coins.filter(c=>Number(c.price_change_percentage_24h)<0).length,flat=coins.length-up-down,mx=Math.max(up,down,flat,1);
+ $('breadthChart').innerHTML=[['Rialzo',up,'gain'],['Ribasso',down,'loss'],['Invariati',flat,'flat']].map(x=>'<div class="breadth-row"><span>'+x[0]+'</span><div class="breadth-track"><div class="breadth-fill '+x[2]+'" style="width:'+(x[1]/mx*100)+'%"></div></div><b>'+x[1]+'</b></div>').join('');
+}
+async function syncWatchlist(direction){
+ const endpoint=$('syncEndpoint').value.trim().replace(/\/$/,'');const key=$('syncKey').value.trim();
+ localStorage.setItem(SYNC_URL_KEY,endpoint);if(key)localStorage.setItem(SYNC_SECRET_KEY,key);
+ if(!/^https:\/\//i.test(endpoint)){ $('syncStatus').textContent='Inserisci l’URL HTTPS del Worker API distribuito.';return}
+ if(!/^fpe_watch_[a-f0-9]{64}$/.test(key)){ $('syncStatus').textContent='Genera o inserisci un codice privato valido.';return}
+ $('syncUpload').disabled=$('syncDownload').disabled=true;$('syncStatus').textContent='Connessione al servizio di sincronizzazione…';
+ try{
+  const res=await fetch(endpoint+'/v1/watchlist',{method:direction==='upload'?'PUT':'GET',headers:{'x-watchlist-key':key,...(direction==='upload'?{'content-type':'application/json'}:{})},body:direction==='upload'?JSON.stringify({symbols:favorites()}):undefined});
+  const data=await res.json();if(!res.ok)throw new Error(data.message||data.error||'HTTP '+res.status);
+  if(direction==='download'){saveFavorites(Array.isArray(data.symbols)?data.symbols:[]);render();$('syncStatus').textContent='Watchlist scaricata e aggiornata su questo dispositivo.'}
+  else $('syncStatus').textContent='Watchlist caricata nel cloud · '+data.symbols.length+' asset sincronizzati.';
+ }catch(e){$('syncStatus').textContent='Sincronizzazione non riuscita: '+e.message+'. Verifica URL, deploy Worker e schema D1.'}
+ finally{$('syncUpload').disabled=$('syncDownload').disabled=false}
+}
+async function load(){
+ if(busy)return;busy=true;$('status').textContent='Caricamento cache CoinMarketCap…';$('refresh').disabled=true;$('prev').disabled=true;$('next').disabled=true;
+ try{
+  const res=await fetch('data/market/cmc-market.json',{cache:'no-store'});if(!res.ok)throw Error('Cache HTTP '+res.status);const json=await res.json();if(!Array.isArray(json.coins))throw Error('Cache non valida');
+  coins=json.coins.map(c=>({id:c.id,name:c.name,symbol:c.symbol,market_cap_rank:c.rank,current_price:c.price,price_change_percentage_24h:c.change_24h,price_change_percentage_7d_in_currency:c.change_7d,market_cap:c.market_cap,total_volume:c.volume_24h,circulating_supply:c.circulating_supply,image:c.logo||'',history_7d:c.history_7d||[]}));
+  const sum=key=>coins.reduce((a,c)=>a+(Number(c[key])||0),0);
+  $('sumAssets').textContent=coins.length.toLocaleString('it-IT');$('sumCap').textContent=fmt(sum('market_cap'),true);$('sumVolume').textContent=fmt(sum('total_volume'),true);
+  $('sumDominance').textContent=Number.isFinite(Number(json.bitcoin_dominance))?Number(json.bitcoin_dominance).toFixed(2)+'%':'—';
+  $('updatedAt').textContent='Aggiornato '+new Date(json.updated_at).toLocaleString('it-IT');
+  renderCharts(json);renderTrending();renderWatchlist();render();
+  $('status').textContent='Fonte: CoinMarketCap · cache aggiornata '+new Date(json.updated_at).toLocaleString('it-IT')+' · '+coins.length+' asset disponibili';
+ }catch(e){$('status').textContent='La cache CoinMarketCap non è disponibile. Riprova più tardi.';if(!coins.length)$('rows').innerHTML='<tr><td colspan="9" style="text-align:center;padding:24px">Dati in fase di inizializzazione.</td></tr>'}
+ finally{busy=false;$('refresh').disabled=false;render()}
+}
+$('search').addEventListener('input',()=>{page=1;render()});$('sort').addEventListener('change',()=>{page=1;render()});$('refresh').addEventListener('click',load);$('prev').addEventListener('click',()=>{if(page>1){page--;render()}});$('next').addEventListener('click',()=>{page++;render()});
+document.querySelectorAll('[data-trend]').forEach(b=>b.addEventListener('click',()=>{trendMode=b.dataset.trend;renderTrending()}));
+$('syncEndpoint').value=localStorage.getItem(SYNC_URL_KEY)||'';$('syncKey').value=localStorage.getItem(SYNC_SECRET_KEY)||'';
+$('createSyncKey').addEventListener('click',()=>{const bytes=new Uint8Array(32);crypto.getRandomValues(bytes);const key='fpe_watch_'+[...bytes].map(b=>b.toString(16).padStart(2,'0')).join('');$('syncKey').value=key;localStorage.setItem(SYNC_SECRET_KEY,key);$('syncStatus').textContent='Codice creato e salvato in questo browser. Copialo e conservalo: servirà anche sugli altri dispositivi.'});
+$('copySyncKey').addEventListener('click',async()=>{try{await navigator.clipboard.writeText($('syncKey').value);$('syncStatus').textContent='Codice copiato.'}catch(e){$('syncStatus').textContent='Copia non disponibile: seleziona manualmente il codice.'}});
+$('syncUpload').addEventListener('click',()=>syncWatchlist('upload'));$('syncDownload').addEventListener('click',()=>syncWatchlist('download'));
+load();
 </script><script>
 /* AdSense is deliberately held off until the Google-certified TCF CMP is published in AdSense > Privacy & messaging. */
 (function(){
