@@ -1,0 +1,16 @@
+name = "finance-pattern-engine-api"
+main = "src/index.js"
+compatibility_date = "2026-10-01"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "fpe-api"
+database_id = "REPLACE_WITH_CLOUDFLARE_D1_DATABASE_ID"
+
+[vars]
+PUBLIC_DATA_URL = "https://italocoin-project.github.io/api/v1/coins.json"
+CORS_ORIGIN = "https://italocoin-project.github.io"
+
+# Configure secrets with:
+# npx wrangler secret put ADMIN_TOKEN
+# Optional later: STRIPE_SECRET_KEY, STRIPE_WEBHOOK_SECRET, RESEND_API_KEY
